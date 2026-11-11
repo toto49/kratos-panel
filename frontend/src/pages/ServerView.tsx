@@ -4,7 +4,7 @@ import Sidebar from "../components/Sidebar.tsx";
 import {useState} from "react";
 
 
-export default function Server() {
+export default function ServerView() {
     const [activeTab, setActiveTab] = useState<string>('dashboard');
     return (
         <div className="flex min-h-screen w-full bg-bg-main text-text-main">

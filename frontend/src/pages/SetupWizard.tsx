@@ -60,15 +60,15 @@ export default function SetupWizard({ onSetupComplete }: SetupWizardProps) {
     };
 
     return (
-        <div >
-            <div className="w-full max-w-md rounded-2xl bg-gray-800 p-8 border border-gray-700 shadow-2xl space-y-6">
+        <div className="flex min-h-screen items-center justify-center  p-4">
+            <div className="w-full max-w-md rounded-2xl bg-bg-card p-8 border border-border-color shadow-2xl space-y-6">
 
                 {/* Header */}
                 <div className="text-center space-y-1">
-                    <h1 className="text-3xl font-extrabold tracking-tight text-white">
+                    <h1 className="text-3xl font-extrabold tracking-tight text-text-main">
                         Kratos-Panel
                     </h1>
-                    <p className="text-sm text-gray-400">
+                    <p className="text-sm text-text-muted">
                         Configuration du compte Administrateur
                     </p>
                 </div>
@@ -131,7 +131,7 @@ export default function SetupWizard({ onSetupComplete }: SetupWizardProps) {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white  hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all mt-2"
+                        className="w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-text-main hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-bg-card disabled:opacity-50 disabled:cursor-not-allowed transition-all mt-2 cursor-pointer"
                     >
                         {loading ? 'Initialisation...' : 'Initialiser Kratos-Panel'}
                     </button>

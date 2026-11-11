@@ -50,7 +50,7 @@ public class UserService {
     }
 
     public AuthResponse loginUser(LoginUserRequest request)  {
-        User user = userRepository.findByPseudo(request.getUsername()).orElseThrow(() -> new IllegalArgumentException("Identifiants incorrects"));
+        User user = userRepository.findByPseudo(request.getPseudo()).orElseThrow(() -> new IllegalArgumentException("Identifiants incorrects"));
 
         if(!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new IllegalStateException("Identifiant incorrecte");

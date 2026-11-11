@@ -5,24 +5,11 @@ services:
     environment:
       POSTGRES_DB: kratos_db
       POSTGRES_USER: kratos
-      POSTGRES_PASSWORD: kratos_default_password_change_me
+      POSTGRES_PASSWORD: kratos_password
+    ports:
+      - "5432:5432"
     volumes:
       - kratos_data:/var/lib/postgresql/data
-    restart: unless-stopped
-
-  backend:
-    image: ghcr.io/ton-github/kratos-backend:latest
-    container_name: kratos-backend
-    environment:
-      - DB_HOST=postgres
-      - DB_PORT=5432
-      - DB_NAME=kratos_db
-      - DB_USER=kratos
-      - DB_PASSWORD=kratos_default_password_change_me
-    ports:
-      - "8081:8081"
-    depends_on:
-      - postgres
     restart: unless-stopped
 
 volumes:

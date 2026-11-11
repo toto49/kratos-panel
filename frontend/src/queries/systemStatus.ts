@@ -7,8 +7,17 @@ export interface StorageStatus {
     usedGB: number;
 }
 
+export interface OsStatus {
+    uptime: number;
+    os: string;
+    manufacturer: string;
+    architecture : string;
+    version : string;
+}
+
 export interface SystemStatus {
     storage: StorageStatus;
+    os : OsStatus;
 }
 
 const fetchSystemStatus = async (): Promise<SystemStatus> => {

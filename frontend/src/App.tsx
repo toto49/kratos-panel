@@ -1,11 +1,17 @@
 import { useEffect, useState } from 'react';
 import SetupWizard from './pages/SetupWizard';
 import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
 
 export default function App() {
-    // Spécifier explicitement les types autorisés (boolean | null)
     const [isInitialized, setIsInitialized] = useState<boolean | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
+
+    const [user, setUser] = useState <Record<string, unknown> | null>(() => {
+        const savedUser = localStorage.getItem("kratos_user");
+        const token = localStorage.getItem("kratos_token");
+        return (savedUser && token) ? JSON.parse(savedUser) : null;
+    });
 
     useEffect(() => {
         let isMounted = true;
@@ -33,15 +39,26 @@ export default function App() {
         };
     }, []);
 
-    if (loading) {
-        return
-    }
+    const handleLogout = () => {
+        localStorage.removeItem("kratos_token");
+        localStorage.removeItem("kratos_user");
+        setUser(null);
+    };
 
-    // 1. Si pas encore d'admin -> Écran Setup Wizard
+    if (loading) {
+        return (
+            <div className="flex min-h-screen items-center justify-center  text-text-muted">
+                Chargement de Kratos-Panel...
+            </div>
+        );
+    }
     if (!isInitialized) {
         return <SetupWizard onSetupComplete={() => setIsInitialized(true)} />;
     }
 
-    // 2. Si le système est prêt -> Écran de Connexion
-    return <Login />;
+    if (user) {
+        return <Dashboard user={user} onLogout={handleLogout} />;
+    }
+
+    return <Login onLoginSuccess={(userData) => setUser(userData)} />;
 }
