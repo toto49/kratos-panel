@@ -1,0 +1,5 @@
+{
+  "plugins": [
+    { "id": "discord-node", "file": "discord/node/discord-node.json", "version": "1.0.0" }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "id": "discord-node",
+  "name": "Bot Discord (Node.js)",
+  "version": "1.1.0",
+  "description": "Déploie un bot Discord Node.js avec choix de la version du runtime.",
+  "runtime": {
+    "image": "node:${NODE_VERSION}-alpine",
+    "workingDir": "/app",
+    "startCommand": "npm install --production && npm start"
+  },
+  "fields": [
+    {
+      "key": "NODE_VERSION",
+      "label": "Version de Node.js",
+      "type": "select",
+      "default": "20",
+      "options": ["16", "18", "20", "22"],
+      "required": true
+    },
+    {
+      "key": "GIT_REPO",
+      "label": "URL du dépôt Git",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "DISCORD_TOKEN",
+      "label": "Token du Bot Discord",
+      "type": "secret",
+      "required": true
+    }
+  ]
+}
