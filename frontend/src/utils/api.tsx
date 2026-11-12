@@ -1,4 +1,5 @@
 const API_BASE_URL = 'http://localhost:8081/api';
+export const SESSION_EXPIRED_EVENT = 'kratos:session-expired';
 
 interface FetchOptions extends RequestInit {
     headers?: Record<string, string>;
@@ -21,7 +22,7 @@ export const apiFetch = async (endpoint: string, options: FetchOptions = {}) => 
     if (response.status === 401 || response.status === 403) {
         localStorage.removeItem('kratos_token');
         localStorage.removeItem('kratos_user');
-        window.location.href = '/';
+        window.dispatchEvent(new Event(SESSION_EXPIRED_EVENT));
         throw new Error('Session expirée ou non autorisée');
     }
 

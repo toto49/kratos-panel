@@ -4,7 +4,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,8 +19,12 @@ import java.util.Collections;
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    @Autowired
-    private JwtUtils jwtUtils;
+    private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
+    private final JwtUtils jwtUtils;
+
+    public JwtAuthenticationFilter(JwtUtils jwtUtils) {
+        this.jwtUtils = jwtUtils;
+    }
 
     @Override
     protected void doFilterInternal(
@@ -33,13 +38,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
 
-            if (jwtUtils.validateToken(token)) {
-                String username = jwtUtils.getUsernameFromToken(token);
+            try {
+                Long userId = jwtUtils.getUserIdFromToken(token);
                 UsernamePasswordAuthenticationToken authentication =
-                        new UsernamePasswordAuthenticationToken(username, null, Collections.emptyList());
+                        new UsernamePasswordAuthenticationToken(
+                                userId.toString(), null, Collections.emptyList()
+                        );
 
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+            } catch (io.jsonwebtoken.JwtException | IllegalArgumentException exception) {
+                logger.debug("Requête reçue avec un JWT invalide: {}", exception.getMessage());
             }
         }
 

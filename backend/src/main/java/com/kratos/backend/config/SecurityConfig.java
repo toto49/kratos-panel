@@ -32,6 +32,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/agent/connect", "/api/agent/install.sh").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
