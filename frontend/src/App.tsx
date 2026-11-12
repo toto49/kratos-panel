@@ -1,12 +1,14 @@
 // src/App.tsx
-import { useCallback, useEffect, useState } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import {useCallback, useEffect, useState} from 'react';
+import {Navigate, Route, Routes} from 'react-router-dom';
 import SetupWizard from './pages/SetupWizard';
 import Login from './pages/Login';
 import DashboardLayout from './pages/layouts/DashboardLayout';
 import SystemView from './pages/views/SystemView';
 import ServersView from './pages/views/ServersView';
-import { SESSION_EXPIRED_EVENT } from './utils/api';
+import ServicesView from "./pages/views/ServicesView";
+import {SESSION_EXPIRED_EVENT} from './utils/api';
+
 
 export default function App() {
     const [isInitialized, setIsInitialized] = useState<boolean | null>(null);
@@ -69,6 +71,7 @@ export default function App() {
                 <Route index element={<Navigate to="/dashboard" replace />} />
                 <Route path="dashboard" element={<SystemView />} />
                 <Route path="servers" element={<ServersView />} />
+                <Route path="services" element={<ServicesView/>}/>
             </Route>
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>

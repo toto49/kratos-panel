@@ -1,10 +1,10 @@
-import { NavLink } from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 
 export default function Sidebar() {
     const menuItems = [
         { to: '/dashboard', label: 'Vue d\'ensemble' },
         { to: '/servers', label: 'Serveurs'},
-        { to: '/containers', label: 'Conteneurs Docker'},
+        {to: '/services', label: 'Services'},
         { to: '/plugin', label: 'Plugin'},
         { to: '/settings', label: 'Paramètres'},
     ];

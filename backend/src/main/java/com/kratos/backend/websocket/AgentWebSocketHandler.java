@@ -103,6 +103,22 @@ public class AgentWebSocketHandler extends TextWebSocketHandler {
             }
         }
     }
+    public void sendCommandToNode(String nodeUuid, String jsonPayload) {
+        WebSocketSession session = activeNodeSessions.get(nodeUuid);
+
+        if (session == null || !session.isOpen()) {
+            throw new IllegalStateException("L'agent du serveur n'est pas connecté actuellement.");
+        }
+
+        try {
+            synchronized (session) {
+                session.sendMessage(new TextMessage(jsonPayload));
+            }
+        } catch (Exception e) {
+            log.error("Erreur lors de l'envoi de la commande au nœud {}", nodeUuid, e);
+            throw new RuntimeException("Impossible de transmettre la commande à l'agent : " + e.getMessage(), e);
+        }
+    }
 
     public WebSocketSession getActiveSession(String nodeUuid) {
         return activeNodeSessions.get(nodeUuid);

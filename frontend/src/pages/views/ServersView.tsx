@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNodesStatus, useCreateNode, useDeleteNode, type NodeResponse } from '../../queries/nodesStatus';
+import React, {useState} from 'react';
+import {type NodeResponse, useCreateNode, useDeleteNode, useNodesStatus} from '../../queries/nodesStatus';
 
 interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
     placeholder: string;
@@ -61,13 +61,12 @@ export default function ServersView() {
         });
     };
 
-    const getInstallCommand = (token: string) => {
-        const backendUrl = import.meta.env.VITE_API_URL || window.location.origin;
-        return `curl -fsSL https://raw.githubusercontent.com/toto49/kratos-panel/main/install.sh | sudo bash -s -- --url="${backendUrl}" --token="${token}"`;
+    const getInstallCommand = (token: string, url: string) => {
+        return `curl -fsSL https://raw.githubusercontent.com/toto49/kratos-panel/main/install.sh | sudo bash -s -- --url="${url}" --token="${token}"`;
     };
 
-    const handleCopy = async (token: string) => {
-        await navigator.clipboard.writeText(getInstallCommand(token));
+    const handleCopy = async (token: string, url: string) => {
+        await navigator.clipboard.writeText(getInstallCommand(token, url));
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
     };
@@ -232,14 +231,14 @@ export default function ServersView() {
                                     <div className="flex justify-end">
                                         <button
                                             type="button"
-                                            onClick={() => void handleCopy(createdNode.agentToken)}
+                                            onClick={() => void handleCopy(createdNode.agentToken, createdNode.fqdn)}
                                             className="text-xs text-primary hover:underline font-semibold cursor-pointer"
                                         >
                                             {copied ? '✓ Copié' : 'Copier'}
                                         </button>
                                     </div>
                                     <pre className="p-3 rounded-lg bg-bg-main border border-border-color text-xs font-mono text-text-main overflow-x-auto whitespace-pre-wrap break-all select-all">
-                                        {getInstallCommand(createdNode.agentToken)}
+                                        {getInstallCommand(createdNode.agentToken, createdNode.fqdn)}
                                     </pre>
                                 </div>
                                 <button
