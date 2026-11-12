@@ -57,7 +57,7 @@ public class UserService {
         }
         user.setLastConnexion(LocalDateTime.now());
         userRepository.save(user);
-        String token = jwtUtils.generateToken(user.getPseudo(), user.getPermission().name());
+        String token = jwtUtils.generateToken(user.getId());
         return AuthResponse.builder()
                 .token(token)
                 .user(UserResponse.fromEntity(user))
