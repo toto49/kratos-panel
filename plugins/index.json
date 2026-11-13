@@ -1,6 +1,7 @@
 {
   "plugins": [
     { "id": "discord-node", "file": "discord/node/discord-node.json" },
-    { "id": "discord-python", "file": "discord/python/discord-python.json" }
+    { "id": "discord-python", "file": "discord/python/discord-python.json" },
+    { "id": "nginx-site", "file": "nginx/site/nginx-site.json" }
   ]
 }

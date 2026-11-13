@@ -1,0 +1,54 @@
+{
+  "id": "nginx-site",
+  "name": "Site web (Nginx)",
+  "version": "1.0.0",
+  "description": "Sert un site statique ou un frontend construit avec Nginx.",
+  "runtime": {
+    "image": "nginx:1.27-alpine",
+    "workingDir": "/usr/share/nginx/html",
+    "startCommand": "nginx -g 'daemon off;'"
+  },
+  "fields": [
+    {
+      "key": "SITE_SOURCE",
+      "label": "Source du site",
+      "type": "select",
+      "default": "git",
+      "options": ["git", "upload"],
+      "required": true
+    },
+    {
+      "key": "GIT_REPO",
+      "label": "URL du dépôt Git",
+      "type": "text",
+      "required": false
+    },
+    {
+      "key": "BUILD_COMMAND",
+      "label": "Commande de build",
+      "type": "text",
+      "default": "",
+      "required": false
+    },
+    {
+      "key": "OUTPUT_DIRECTORY",
+      "label": "Dossier de sortie",
+      "type": "text",
+      "default": ".",
+      "required": true
+    },
+    {
+      "key": "ENTRYPOINT",
+      "label": "Fichier d'entrée",
+      "type": "text",
+      "default": "index.html",
+      "required": true
+    },
+    {
+      "key": "NGINX_CONFIG",
+      "label": "Configuration Nginx personnalisée",
+      "type": "text",
+      "required": false
+    }
+  ]
+}
