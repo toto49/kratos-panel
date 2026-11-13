@@ -5,7 +5,7 @@ export default function Sidebar() {
         { to: '/dashboard', label: 'Vue d\'ensemble' },
         { to: '/servers', label: 'Serveurs'},
         {to: '/services', label: 'Services'},
-        { to: '/plugin', label: 'Plugin'},
+        { to: '/plugins', label: 'Plugins'},
         { to: '/settings', label: 'Paramètres'},
     ];
 

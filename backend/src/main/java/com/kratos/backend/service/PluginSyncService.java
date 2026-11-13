@@ -61,16 +61,19 @@ public class PluginSyncService {
         for (JsonNode entry : indexNode.get("plugins")) {
             String id = entry.get("id").asString();
             String file = entry.get("file").asString();
-            String remoteVersion = entry.get("version").asString();
+
+            String pluginRaw = restClient.get()
+                    .uri(baseRepoUrl + "/" + file)
+                    .retrieve()
+                    .body(String.class);
+            JsonNode pluginJson = objectMapper.readTree(pluginRaw);
+            String remoteVersion = pluginJson.path("version").asString("");
+            if (remoteVersion.isBlank()) {
+                throw new IllegalStateException("Version absente pour le plugin " + id);
+            }
 
             Optional<PluginBlueprint> existing = repository.findById(id);
             if (existing.isEmpty() || !existing.get().getVersion().equals(remoteVersion)) {
-                String pluginRaw = restClient.get()
-                        .uri(baseRepoUrl + "/" + file)
-                        .retrieve()
-                        .body(String.class);
-
-                JsonNode pluginJson = objectMapper.readTree(pluginRaw);
                 PluginBlueprint bp = existing.orElseGet(PluginBlueprint::new);
                 bp.setId(id);
                 bp.setName(pluginJson.get("name").asString());

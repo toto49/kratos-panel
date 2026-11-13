@@ -1,0 +1,33 @@
+{
+  "id": "discord-python",
+  "name": "Bot Discord (Discord.py)",
+  "version": "1.1.0",
+  "description": "Déploie un bot Discord Discord.py avec choix de la version du runtime.",
+  "runtime": {
+    "image": "python:${PYTHON_VERSION}-alpine",
+    "workingDir": "/app",
+    "startCommand": "pip install --no-cache-dir -r requirements.txt && python main.py"
+  },
+  "fields": [
+    {
+      "key": "PYTHON_VERSION",
+      "label": "Version de Python",
+      "type": "select",
+      "default": "3.12",
+      "options": ["3.10", "3.11", "3.12", "3.13"],
+      "required": true
+    },
+    {
+      "key": "GIT_REPO",
+      "label": "URL du dépôt Git",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "DISCORD_TOKEN",
+      "label": "Token du Bot Discord",
+      "type": "secret",
+      "required": true
+    }
+  ]
+}

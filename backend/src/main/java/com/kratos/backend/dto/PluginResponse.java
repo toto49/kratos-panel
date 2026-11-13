@@ -6,7 +6,7 @@ import tools.jackson.databind.ObjectMapper;
 
 import java.time.LocalDateTime;
 
-public record PluginResponse(
+public record   PluginResponse(
         String id,
         String name,
         String version,

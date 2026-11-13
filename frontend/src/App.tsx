@@ -8,6 +8,7 @@ import SystemView from './pages/views/SystemView';
 import ServersView from './pages/views/ServersView';
 import ServicesView from "./pages/views/ServicesView";
 import {SESSION_EXPIRED_EVENT} from './utils/api';
+import PluginsView from "./pages/views/PluginsView.tsx";
 
 
 export default function App() {
@@ -72,6 +73,7 @@ export default function App() {
                 <Route path="dashboard" element={<SystemView />} />
                 <Route path="servers" element={<ServersView />} />
                 <Route path="services" element={<ServicesView/>}/>
+                <Route path="plugins" element={<PluginsView/>}/>
             </Route>
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
